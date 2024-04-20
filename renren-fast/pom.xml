@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.renren</groupId>
 	<artifactId>renren-fast</artifactId>
@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.6</version>
+		<version>2.2.4.RELEASE</version>
 		<relativePath/>
 	</parent>
 
@@ -49,9 +49,21 @@
 		<remote-addr>192.168.1.10:22</remote-addr>
 		<remote-username>root</remote-username>
 		<remote-passwd>123456</remote-passwd>
+
+		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+			<version>2.1.0.RELEASE</version>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.atguigu.gulimall</groupId>-->
+<!--			<artifactId>gulimall-common</artifactId>-->
+<!--			<version>0.0.1-SNAPSHOT</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -83,9 +95,9 @@
 			<optional>true</optional>
 		</dependency>
 		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-devtools</artifactId>-->
-			<!--<optional>true</optional>-->
+		<!--<groupId>org.springframework.boot</groupId>-->
+		<!--<artifactId>spring-boot-devtools</artifactId>-->
+		<!--<optional>true</optional>-->
 		<!--</dependency>-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
@@ -103,19 +115,19 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-		 <!--oracle驱动-->
+		<!--oracle驱动-->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>${oracle.version}</version>
 		</dependency>
-		 <!--mssql驱动-->
+		<!--mssql驱动-->
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>sqljdbc4</artifactId>
 			<version>${mssql.version}</version>
 		</dependency>
-		 <!--postgresql驱动-->
+		<!--postgresql驱动-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -196,11 +208,18 @@
 			<artifactId>qiniu-java-sdk</artifactId>
 			<version>${qiniu.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.aliyun.oss</groupId>
-			<artifactId>aliyun-sdk-oss</artifactId>
-			<version>${aliyun.oss.version}</version>
-		</dependency>
+				<dependency>
+					<groupId>com.aliyun.oss</groupId>
+					<artifactId>aliyun-sdk-oss</artifactId>
+					<version>${aliyun.oss.version}</version>
+				</dependency>
+<!--&lt;!&ndash;由于renren-fast中也使用了阿里云oss上传，因此注释了SDK依赖会导致renren-fast的AliyunCloudStorageService.java缺少oss，&ndash;&gt;-->
+<!--&lt;!&ndash;此时需要引入与common一样的依赖，这样项目能成功运行- &ndash;&gt;-->
+<!--		<dependency>&lt;!&ndash;引入这个依赖 &ndash;&gt;-->
+<!--			<groupId>com.alibaba.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-alicloud-oss</artifactId>-->
+<!--			<version>2.1.0.RELEASE</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>com.qcloud</groupId>
 			<artifactId>cos_api</artifactId>
@@ -252,9 +271,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<fork>true</fork>
-				</configuration>
+<!--				<configuration>-->
+<!--					<fork>true</fork>-->
+<!--				</configuration>-->
 			</plugin>
 			<!-- 跳过单元测试 -->
 			<plugin>
@@ -289,12 +308,12 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.14</version>
 				<!--<executions>-->
-					<!--<execution>-->
-						<!--<phase>package</phase>-->
-						<!--<goals>-->
-							<!--<goal>build</goal>-->
-						<!--</goals>-->
-					<!--</execution>-->
+				<!--<execution>-->
+				<!--<phase>package</phase>-->
+				<!--<goals>-->
+				<!--<goal>build</goal>-->
+				<!--</goals>-->
+				<!--</execution>-->
 				<!--</executions>-->
 				<configuration>
 					<imageName>renren/fast</imageName>
@@ -335,5 +354,17 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 </project>
