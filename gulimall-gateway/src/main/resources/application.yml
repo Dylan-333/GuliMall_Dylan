@@ -11,16 +11,3 @@ spring:
           uri: https://www.qq.com
           predicates:
             - Query=url,qq
-
-        - id: admin_route
-          uri: lb://renren-fast
-          predicates:
-            - Path=/api/**
-          filters:
-            - RewritePath=/api/?(?<segment>.*), /renren-fast/$\{segment}
-## 前端项目，都带上/api
-# 负载均衡，把 请求消息转到 /api/**
-# 在gateway中配置uri配置有三种方式，包括
-#第一种：ws(websocket)方式: uri: ws://localhost:9000
-#第二种：http方式: uri: http://localhost:8130/
-#第三种：lb(注册中心中服务名字)方式: uri: lb://brilliance-consumer
