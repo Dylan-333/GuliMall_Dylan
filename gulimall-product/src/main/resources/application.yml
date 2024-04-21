@@ -15,5 +15,11 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+      logic-delete-value: 0
+      logic-not-delete-value: 1
 server:
   port: 10000
+logging:
+  level:
+    #配置到项目，具体到模块，不显示。
+    com.atguigu.gulimall: debug
