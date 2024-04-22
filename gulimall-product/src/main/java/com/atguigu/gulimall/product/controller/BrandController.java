@@ -2,12 +2,13 @@ package com.atguigu.gulimall.product.controller;
 
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
+import com.atguigu.common.valid.AddGroup;
 import com.atguigu.gulimall.product.entity.BrandEntity;
 import com.atguigu.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public class BrandController {
     @RequestMapping("/save")
     //@RequiresPermissions("product:brand:save")
 //    public R save(@Valid @RequestBody BrandEntity brand, BindingResult result){
-        public R save(@Valid @RequestBody BrandEntity brand){
+        public R save(@Validated(AddGroup.class) @RequestBody BrandEntity brand){
 //        if (result.hasErrors()) {
 //            HashMap<Object, Object> map = new HashMap<>();
 //            // 1、获取校验的错误结果
